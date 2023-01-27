@@ -1,32 +1,17 @@
-# Recession Predictor - Phase 3 Project
+# Recession Predictor
 
-This project has an associated [blog post](https://medium.com/mlearning-ai/forecasting-recessions-with-scikit-learn-df58e1ea695f) published in MLearning.ai which goes into more detail on the methodology presented below.
+This project is based on [this repo ](https://github.com/DanlBradley/RecessionPredictor)and this associated [blog post](https://medium.com/mlearning-ai/forecasting-recessions-with-scikit-learn-df58e1ea695f) published in MLearning.ai which goes into more detail on the methodology presented. The main idea for this project is to download a lot of data that we will process and train a model on, which we will then later use to predict future recessions. For that we will use 3 different methods, logistic regression, random forest and XGBoost.
 
 ## Navigating this Repo
-The project is broken up into three main notebooks, in chronological order:
 
-1. Data cleaning: This notebook makes the necessary API calls to the Nasdaq Datalink and imports local data. It then performs the necessary joins and saves the prepared DataFrame as a .csv file to be used in the model tuning notebook.
+This project is split up into two parts. The data acquasition and the model creating and prediction part. 
 
-2. Model tuning: This notebook focuses on testing the different models against each other and determining a winner. It also creates visualizations to better understand model performance and
+1. Full Potential - this notebook downloads, preprocesses and saves all of the used data in a local csv file which will be read by the other part of the project. In here we download a lot of data from FRED and nasdaqdatalink. To further understand why we chose the follwing indicators for our project, you should take a look at Daniels blog post.
+2. Model Tuning - this notebook is where the magic happens and our models are trained and executed. We will also take a closer look at the preformance of the models and compare them which each other. At the end we also try to predict in a monthly basis instead of fiscal quarter basis to try to get a prediction as close as possible to the current date.
 
-3. Simulation: This notebook takes the probability outputs of recession from 1963-2022 and uses it to simulate a basic portfolio strategy. The simulation takes that probability and "purchases" Dow Jones shares according to the probability that there will not be a recession, and purchases gold according to the probability that there will be a recession. This portfolio is updated quartely, as that is when new economic leading indicators come in to update the next model.
+## Conda Environment
 
-
-
-## Overview
-The overall goal of the project was to see if we could predict future recessions using reliable, long-term economic metrics. We scoped the problem to ask specifically whether we could predict a recession in the next fiscal quarter.
-
-## Business Problem
-There are many reasons to attempt to predict a recession, as recessions generally are accompanied by unemployment, inflation, downturn in markets, and generally poor economic conditions for the country experiencing it. Therefore, if a recession can be predicted, preparations can be made to lessen the impact, thereby increasing profits in the long run for investors, or increasing job retention for governments.
-
-## Methods
-We considered several different models for this problem, but determined that the random forest classifier created the most robust model for predicting recessions at various lengths of time into the future. The Receiver-Operator Characteristic curve, a key metric for classification models, is displayed below for our top three models. Note that XGBoost performed better on this metric than the random forest, but tended to over-fit the data in other metrics.
-
-![](/figures/ROC.png)
-
-Using the random forest model, the simulation results are shown below which compare using our model to invest in an aggressive asset (in this case the Dow) versus a more conservative asset (in this case gold, which typically performs relatively well during recessions). The ratio of aggressive to conservative assets is determined by the prediction probability of a recession, and is updated quarterly. The image on the bottom shows the logarithmic of the same graph, which highlights the fact that most of the increase in performance of the predictor versus only investing in the Dow comes from the fact that the predictor correctly predicted the 2008 recession and the associated market downturn associated with it.
-
-![](/figures/StockSim.png)
-
-![](/figures/StockSimLog.png)
-
+```bash
+conda create -n aoec -f environment.yml
+conda activate aoec
+```
